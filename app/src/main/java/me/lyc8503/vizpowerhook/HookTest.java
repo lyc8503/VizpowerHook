@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.ContextThemeWrapper;
 import android.widget.Toast;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
+
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -49,7 +52,8 @@ public class HookTest implements IXposedHookLoadPackage {
                     });
 
 
-                    XposedHelpers.findAndHookMethod("vizpower.weblogin.ClassListActivity", classLoader, "init", new XC_MethodHook() {
+                    // 在ClassActivity中弹出提示提醒用户( 已做了对HD的适配 )
+                    XC_MethodHook successHintHook = new XC_MethodHook() {
                         @Override
                         protected void beforeHookedMethod(MethodHookParam param) {
                             XposedBridge.log(TAG + " 成功HookVizpower目标方法: " + param);
@@ -57,9 +61,66 @@ public class HookTest implements IXposedHookLoadPackage {
 
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) {
-
-                            Toast.makeText(vizContext, "VizpowerHook: 已经成功Hook到无限宝!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(vizContext, "VizpowerHook: 已经Hook到无限宝! 模块启动成功.", Toast.LENGTH_LONG).show();
                             XposedBridge.log(TAG + " Hook Test已经完成!");
+                        }
+                    };
+
+                    XposedHelpers.findAndHookMethod("vizpower.weblogin.ClassListActivity", classLoader, "init", successHintHook);
+                    XposedHelpers.findAndHookMethod("vizpower.weblogin.ClassListActivityHD", classLoader, "init", successHintHook);
+
+
+                    // Hook两个登陆有关的方法并打印出所有参数便于调试.
+                    XposedHelpers.findAndHookMethod("vizpower.mtmgr.Room", classLoader, "advLogin", String.class, "vizpower.mtmgr.PDU.JoinMeetingPDU", "vizpower.mtmgr.IRoom.RetInfo", new XC_MethodHook() {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) {
+                            XposedBridge.log(TAG + " advLogin: " + Arrays.toString(param.args));
+//                            XposedBridge.log(TAG + " joinMeetingPDU: " + );
+                        }
+
+                        @Override
+                        protected void afterHookedMethod(MethodHookParam param) {
+
+                        }
+                    });
+
+                    XposedHelpers.findAndHookMethod("vizpower.mtmgr.Room", classLoader, "loginToLoginServer", String.class, int.class, "vizpower.mtmgr.PDU.JoinMeetingPDU", "vizpower.mtmgr.IRoom.RetInfo", new XC_MethodHook() {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) {
+                            XposedBridge.log(TAG + " loginToLoginServer: " + Arrays.toString(param.args));
+                        }
+
+                        @Override
+                        protected void afterHookedMethod(MethodHookParam param) {
+
+                        }
+                    });
+
+
+                    // Hook登陆PDU更改信息
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MeetingMgr", classLoader, "fillLoginInfo", "vizpower.mtmgr.PDU.JoinMeetingPDU", new XC_MethodHook() {
+                        @Override
+                        protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                            super.afterHookedMethod(param);
+
+                            XposedBridge.log(TAG + " Hook到joinMeetingPDU的创建.");
+
+                            for (Field field : param.args[0].getClass().getDeclaredFields()) {
+
+                                if (field.getName().contains("szNickName")) {
+//                                    Toast.makeText(vizContext, TAG + "VizpowerHook: 名字修改成功", Toast.LENGTH_LONG).show();
+                                    XposedBridge.log("找到scNickName: " + XposedHelpers.getObjectField(param.args[0], field.getName()));
+                                    XposedHelpers.setObjectField(param.args[0], field.getName(), "miaow~");
+                                    XposedBridge.log("修改过后的scNickName: " + XposedHelpers.getObjectField(param.args[0], field.getName()));
+                                }
+
+//                                if(field.getName().contains("wUserRole")){
+//                                    XposedBridge.log("找到wUserRole: " + XposedHelpers.getObjectField(param.args[2], field.getName()));
+//                                    XposedHelpers.setObjectField(param.args[2], field.getName(), 8);
+//                                    XposedBridge.log("修改过后的wUserRole: " + XposedHelpers.getObjectField(param.args[2], field.getName()));
+//                                }
+                            }
+
                         }
                     });
                 }
