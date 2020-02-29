@@ -11,7 +11,9 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import me.lyc8503.vizpowerhook.hook.ClassListActivityHook;
+import me.lyc8503.vizpowerhook.hook.HttpLoginHook;
 import me.lyc8503.vizpowerhook.hook.LoginPDUHook;
+import me.lyc8503.vizpowerhook.hook.SetRoleHook;
 import me.lyc8503.vizpowerhook.hook.StartParamHook;
 
 public class HookTest implements IXposedHookLoadPackage {
@@ -71,6 +73,12 @@ public class HookTest implements IXposedHookLoadPackage {
 
                     // 直接Hook程序启动部分
                     XposedHelpers.findAndHookMethod("vizpower.imeeting.MeetingMgr", classLoader, "getStartParam", String.class, String.class, new StartParamHook());
+
+                    // Hook Http登陆返回值
+                    XposedHelpers.findAndHookMethod("vizpower.weblogin.VPWebLoginMgr", classLoader, "createMeetingListAdapter", new HttpLoginHook());
+
+                    // Hook setRole
+//                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MeetingMgr", classLoader, "setMyRole", short.class, new SetRoleHook());
                 }
             });
         }
