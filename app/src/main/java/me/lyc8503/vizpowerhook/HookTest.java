@@ -10,6 +10,7 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import me.lyc8503.vizpowerhook.hook.ChatMgrHook;
 import me.lyc8503.vizpowerhook.hook.ClassListActivityHook;
 import me.lyc8503.vizpowerhook.hook.HttpLoginHook;
 import me.lyc8503.vizpowerhook.hook.LoginPDUHook;
@@ -45,7 +46,6 @@ public class HookTest implements IXposedHookLoadPackage {
                     XposedBridge.log(TAG + " Hook到的Classloader: " + classLoader);
                     // 下面就是强classloader修改成360的classloader就可以成功的hook了
 
-
                     // 在ClassActivity中弹出提示提醒用户( 已做了对HD的适配 )
                     XC_MethodHook successHintHook = new ClassListActivityHook();
                     XposedHelpers.findAndHookMethod("vizpower.weblogin.ClassListActivity", classLoader, "init", successHintHook);
@@ -76,6 +76,9 @@ public class HookTest implements IXposedHookLoadPackage {
 
                     // Hook Http登陆返回值
                     XposedHelpers.findAndHookMethod("vizpower.weblogin.VPWebLoginMgr", classLoader, "createMeetingListAdapter", new HttpLoginHook());
+
+                    // 强制打开公聊
+                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendChatPub", new ChatMgrHook());
 
                     // Hook setRole
 //                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MeetingMgr", classLoader, "setMyRole", short.class, new SetRoleHook());

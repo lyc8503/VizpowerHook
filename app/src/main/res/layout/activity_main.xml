@@ -4,15 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
-    <TextView
+    <CheckBox
+        android:id="@+id/bypassSensitive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="302dp"
+        android:checked="false"
+        android:text="绕过屏蔽词(需要重新登陆以生效)(理性使用!)"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/showPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="15dp"
+        android:text="显示在线人数(需要重新登陆以生效)(暂时我也不知道有什么用只是改了个变量x)"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bypassSensitive" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="16dp"
+        android:text="自动签到(暂时还未完成你勾了也没用hh)"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showPeople" />
+
+    <EditText
+        android:id="@+id/changeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:contentDescription="留空则不改."
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/bypassSensitive"
+        app:layout_constraintStart_toEndOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/introduction"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/introduction"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:text="改名(不改请留空)(需要重新登陆以生效): "
+        app:layout_constraintBaseline_toBaselineOf="@+id/changeName"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
