@@ -80,8 +80,18 @@ public class HookTest implements IXposedHookLoadPackage {
                     // 强制打开公聊
                     XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendChatPub", new ChatMgrHook());
 
-                    // Hook setRole
-//                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MeetingMgr", classLoader, "setMyRole", short.class, new SetRoleHook());
+                    // 开启发图模式，夜神可能会被识别为 TV 而禁止
+                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendPic", new ChatMgrHook());
+
+                    // 开启提问功能，已测试成功
+                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "canSubmitQuestion", new ChatMgrHook());
+                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "isAllowSubmitQuestion", new ChatMgrHook());
+
+                    // Anguei: 不知道为什么添加 Java class 会报错，所以这里几个 Boolean 函数直接用一个 hook 来搞了
+
+                    // 尝试修改为助教
+                    // XposedHelpers.findAndHookMethod("vizpower.immeting.UserMgr", classLoader, "isAssister", new ChatMgrHook());
+                    // XposedHelpers.findAndHookMethod("vizpower.imeeting.MeetingMgr", classLoader, "setMyRole", short.class, new SetRoleHook());
                 }
             });
         }
