@@ -45,7 +45,7 @@ public class HttpLoginHook extends XC_MethodHook {
         List<Map<String, String>> allClasses = (List<Map<String, String>>) XposedHelpers.getObjectField(param.thisObject, "m_MeetingDataList");
 //        List<Map<String, String>> allClassesNew = new ArrayList<>();
         for (Map<String, String> oneClass : allClasses) {
-            XposedBridge.log(TAG + " " + oneClass);
+            // XposedBridge.log(TAG + " " + oneClass);
             for (Map.Entry<String, String> entry : oneClass.entrySet()) {
 //                if (entry.getKey().equals("listenType")) {
 //                    entry.setValue(newListenType);
@@ -58,6 +58,7 @@ public class HttpLoginHook extends XC_MethodHook {
                         entry.setValue(name);
                         XposedBridge.log(TAG + " Hook到NickName并改为" + name);
                     } else {
+                        entry.setValue("匿名_3984");
                         XposedBridge.log(TAG + " Hook到NickName. 不改名.");
                     }
                 }
