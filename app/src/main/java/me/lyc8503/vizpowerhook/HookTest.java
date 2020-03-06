@@ -10,6 +10,8 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import me.lyc8503.vizpowerhook.hook.BoolFunctionFalseHook;
+import me.lyc8503.vizpowerhook.hook.BoolFunctionTrueHook;
 import me.lyc8503.vizpowerhook.hook.ChatMgrHook;
 import me.lyc8503.vizpowerhook.hook.ClassListActivityHook;
 import me.lyc8503.vizpowerhook.hook.HttpLoginHook;
@@ -78,19 +80,21 @@ public class HookTest implements IXposedHookLoadPackage {
                     XposedHelpers.findAndHookMethod("vizpower.weblogin.VPWebLoginMgr", classLoader, "createMeetingListAdapter", new HttpLoginHook());
 
                     // 强制打开公聊
-                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendChatPub", new ChatMgrHook());
+                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendChatPub", new BoolFunctionTrueHook());
 
-                    // 开启发图模式，夜神可能会被识别为 TV 而禁止
-                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendPic", new ChatMgrHook());
+                    // 开启发图模式。为防止夜神可能会被识别为 TV 而禁止，强制竖屏。已测试成功。
+                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendPic", new BoolFunctionTrueHook());
+                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendPic", new BoolFunctionTrueHook());
+                    XposedHelpers.findAndHookMethod("vizpower.common.VPUtils", classLoader, "isTVDevice", new BoolFunctionFalseHook());
 
-                    // 开启提问功能，已测试成功
-                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "canSubmitQuestion", new ChatMgrHook());
-                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "isAllowSubmitQuestion", new ChatMgrHook());
+                    // 开启提问功能，已测试成功。
+                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "canSubmitQuestion", new BoolFunctionTrueHook());
+                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "isAllowSubmitQuestion", new BoolFunctionTrueHook());
 
-                    // Anguei: 不知道为什么添加 Java class 会报错，所以这里几个 Boolean 函数直接用一个 hook 来搞了
+                    // Anguei: 新建了两个 Java 类，可成功 build 并实现预期的功能；但是不大明白为啥会被 Android Studio 标红。
 
                     // 尝试修改为助教
-                    // XposedHelpers.findAndHookMethod("vizpower.immeting.UserMgr", classLoader, "isAssister", new ChatMgrHook());
+                    // XposedHelpers.findAndHookMethod("vizpower.immeting.UserMgr", classLoader, "isAssister", new BoolFunctionTrueHook());
                     // XposedHelpers.findAndHookMethod("vizpower.imeeting.MeetingMgr", classLoader, "setMyRole", short.class, new SetRoleHook());
                 }
             });
