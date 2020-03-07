@@ -1,7 +1,11 @@
 language: android
 dist: trusty
+
 android:
   components:
-    - build-tools-26.0.2
-    - android-26
+    - build-tools-29.0.0
+    - android-29
     - extra
+
+before_install:
+  - chmod +x gradlew
