@@ -12,6 +12,7 @@ before_install:
 
 script:
   - "./gradlew assembleRelease"
+  - "mv app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/XposedVizpowerHook.apk"
 
 deploy:
   provider: releases
