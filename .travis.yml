@@ -9,3 +9,15 @@ android:
 
 before_install:
   - chmod +x gradlew
+
+script:
+  - "./gradlew assembleRelease"
+
+deploy:
+  provider: releases
+  api_key: ${GITHUB_TOKEN}
+  file: "app/build/outputs/apk/app-release-unsigned.apk"
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: lyc8503/VizpowerHook
