@@ -93,6 +93,12 @@ public class HookTest implements IXposedHookLoadPackage {
 
                     // Anguei: 新建了两个 Java 类，可成功 build 并实现预期的功能；但是不大明白为啥会被 Android Studio 标红。
 
+
+                    // 先写一个开麦克风功能, 代码风格和GUI都要改了但是我懒啊x
+                    // 这个好像一口气打开了很多权限的样子随他去了 :P
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.PrivilegeMgr", classLoader, "hasTheChangeablePriv", int.class, new BoolFunctionTrueHook());
+
+
                     // 尝试修改为助教
                     // XposedHelpers.findAndHookMethod("vizpower.immeting.UserMgr", classLoader, "isAssister", new BoolFunctionTrueHook());
                     // XposedHelpers.findAndHookMethod("vizpower.imeeting.MeetingMgr", classLoader, "setMyRole", short.class, new SetRoleHook());
