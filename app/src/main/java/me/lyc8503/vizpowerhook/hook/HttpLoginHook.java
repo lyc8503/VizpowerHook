@@ -58,7 +58,7 @@ public class HttpLoginHook extends XC_MethodHook {
                         entry.setValue(name);
                         XposedBridge.log(TAG + " Hook到NickName并改为" + name);
                     } else {
-                        entry.setValue("匿名_3984");
+                        if (CompileOpt.changeName) entry.setValue("匿名_3984");
                         XposedBridge.log(TAG + " Hook到NickName. 不改名.");
                     }
                 }
