@@ -19,7 +19,7 @@ public class ClassListActivityHook extends XC_MethodHook {
     @Override
     protected void afterHookedMethod(MethodHookParam param) {
         Context vizContext = ((Activity) param.thisObject).getApplicationContext();
-        Toast.makeText(vizContext, "VizpowerHook: You Have Hooked WXB!" + (CompileOpt.showBuildTime ? "1639" : ""), Toast.LENGTH_LONG).show();
+        Toast.makeText(vizContext, "VizpowerHook: You Have Hooked WXB!" + (CompileOpt.showBuildTime ? "0013" : ""), Toast.LENGTH_LONG).show();
         XposedBridge.log(TAG + " Hook Test已经完成!");
     }
 }

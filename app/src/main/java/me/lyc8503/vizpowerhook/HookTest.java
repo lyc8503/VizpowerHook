@@ -90,15 +90,27 @@ public class HookTest implements IXposedHookLoadPackage {
                     XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "canSubmitQuestion", new BoolFunctionTrueHook());
                     XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "isAllowSubmitQuestion", new BoolFunctionTrueHook());
 
-                    // Anguei: 新建了两个 Java 类，可成功 build 并实现预期的功能；但是不大明白为啥会被 Android Studio 标红。
-
 
                     // 先写一个开麦克风功能, 代码风格和GUI都要改了但是我懒啊x
                     // 这个好像一口气打开了很多权限的样子随他去了 :P
+                    // Anguei: 查了一下引用，发现只有在 AudioMgr.java 里面，有 if 形式的 hasTheChangeablePriv(int) 调用
+                    //         在 ChatMgr.java 和 VPDocView.java 里面，有变量赋值形式的 hasTheChangeablePriv(int, int) 调用
                     XposedHelpers.findAndHookMethod("vizpower.imeeting.PrivilegeMgr", classLoader, "hasTheChangeablePriv", int.class, new BoolFunctionTrueHook());
 
+                    // 开启添加、标记文档的权限
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isTeacherPhoneMode", new BoolFunctionTrueHook());
+                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canAddDoc", new BoolFunctionTrueHook());
+                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canNoteDoc", new BoolFunctionTrueHook());
+
+                    // 开启弹幕
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isCanDanMu", new BoolFunctionTrueHook());
+
+                    // 开启发送礼物的功能
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "canShowGift", new BoolFunctionTrueHook());
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "canSendGift", new BoolFunctionTrueHook());
 
                     // 尝试修改为助教
+                    // XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isAssistantMode", new BoolFunctionTrueHook());
                     // XposedHelpers.findAndHookMethod("vizpower.immeting.UserMgr", classLoader, "isAssister", new BoolFunctionTrueHook());
                     // XposedHelpers.findAndHookMethod("vizpower.imeeting.MeetingMgr", classLoader, "setMyRole", short.class, new SetRoleHook());
                 }
