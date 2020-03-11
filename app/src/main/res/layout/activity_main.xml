@@ -7,15 +7,28 @@
     tools:context=".activity.MainActivity">
 
     <CheckBox
+        android:id="@+id/teacherMode"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:text="强制使用教师模式启动，但可能触发断线重连"
+        app:layout_constraintBottom_toTopOf="@+id/forceVertical"
+        app:layout_constraintEnd_toEndOf="@+id/forceVertical"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/forceVertical"
+        app:layout_constraintTop_toBottomOf="@+id/changeName" />
+
+    <CheckBox
         android:id="@+id/forceVertical"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="0dp"
         android:checked="false"
         android:text="强制竖屏 (横屏真的很难用 x)(不开启可能对发送图片功能有影响...)"
         app:layout_constraintBottom_toTopOf="@+id/autoRollcall"
         app:layout_constraintEnd_toEndOf="@+id/autoRollcall"
         app:layout_constraintStart_toStartOf="@+id/autoRollcall"
-        app:layout_constraintTop_toBottomOf="@+id/changeName" />
+        app:layout_constraintTop_toBottomOf="@+id/teacherMode" />
 
     <CheckBox
         android:id="@+id/autoRollcall"
