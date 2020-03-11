@@ -12,13 +12,3 @@ before_install:
 
 script:
   - "./gradlew assembleRelease"
-  - "mv app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/XposedVizpowerHook.apk"
-
-deploy:
-  provider: releases
-  api_key: ${GITHUB_TOKEN}
-  file: "app/build/outputs/apk/app-release-unsigned.apk"
-  skip_cleanup: true
-  on:
-    tags: true
-    repo: lyc8503/VizpowerHook
