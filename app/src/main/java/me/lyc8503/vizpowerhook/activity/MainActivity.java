@@ -2,7 +2,6 @@ package me.lyc8503.vizpowerhook.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import me.lyc8503.vizpowerhook.R;
-import me.lyc8503.vizpowerhook.hook.HttpLoginHook;
 
 
 import android.content.SharedPreferences;
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        CheckBox bypassSensitive = findViewById(R.id.bypassSensitive);
+        CheckBox bypassSensitive = findViewById(R.id.forceVertical);
         bypassSensitive.setChecked(preferences.getBoolean("bypassSensitive", false));
         bypassSensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        CheckBox showPeople = findViewById(R.id.showPeople);
+        CheckBox showPeople = findViewById(R.id.autoRollcall);
         showPeople.setChecked(preferences.getBoolean("showPeople", false));
         showPeople.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -74,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
         String name = changeNameTextView.getText().toString();
         editor.putString("name", name);
 
-        CheckBox bypassSensitiveBox = (CheckBox) findViewById(R.id.bypassSensitive);
+        CheckBox bypassSensitiveBox = (CheckBox) findViewById(R.id.forceVertical);
         boolean bypassSensitive = bypassSensitiveBox.isChecked();
         editor.putBoolean("bypassSensitive", bypassSensitive);
 
-        CheckBox showPeopleBox = (CheckBox) findViewById(R.id.showPeople);
+        CheckBox showPeopleBox = (CheckBox) findViewById(R.id.autoRollcall);
         boolean showPeople = showPeopleBox.isChecked();
         editor.putBoolean("showPeople", showPeople);
 

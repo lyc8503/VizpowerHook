@@ -1,7 +1,6 @@
 package me.lyc8503.vizpowerhook;
 
 import android.content.Context;
-import android.view.ContextThemeWrapper;
 
 import java.util.Arrays;
 
@@ -12,11 +11,9 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import me.lyc8503.vizpowerhook.hook.BoolFunctionFalseHook;
 import me.lyc8503.vizpowerhook.hook.BoolFunctionTrueHook;
-import me.lyc8503.vizpowerhook.hook.ChatMgrHook;
 import me.lyc8503.vizpowerhook.hook.ClassListActivityHook;
 import me.lyc8503.vizpowerhook.hook.HttpLoginHook;
 import me.lyc8503.vizpowerhook.hook.LoginPDUHook;
-import me.lyc8503.vizpowerhook.hook.SetRoleHook;
 import me.lyc8503.vizpowerhook.hook.StartParamHook;
 
 public class HookTest implements IXposedHookLoadPackage {
@@ -95,19 +92,26 @@ public class HookTest implements IXposedHookLoadPackage {
                     // 这个好像一口气打开了很多权限的样子随他去了 :P
                     // Anguei: 查了一下引用，发现只有在 AudioMgr.java 里面，有 if 形式的 hasTheChangeablePriv(int) 调用
                     //         在 ChatMgr.java 和 VPDocView.java 里面，有变量赋值形式的 hasTheChangeablePriv(int, int) 调用
+                    // 暂时就开着吧反正可以开麦x
                     XposedHelpers.findAndHookMethod("vizpower.imeeting.PrivilegeMgr", classLoader, "hasTheChangeablePriv", int.class, new BoolFunctionTrueHook());
 
                     // 开启添加、标记文档的权限
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isTeacherPhoneMode", new BoolFunctionTrueHook());
-                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canAddDoc", new BoolFunctionTrueHook());
-                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canNoteDoc", new BoolFunctionTrueHook());
 
-                    // 开启弹幕
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isCanDanMu", new BoolFunctionTrueHook());
+                    // 这个会被封号x
+//                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isTeacherPhoneMode", new BoolFunctionTrueHook());
+//                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canAddDoc", new BoolFunctionTrueHook());
+//                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canNoteDoc", new BoolFunctionTrueHook());
+
+                    // 开启弹幕.
+
+                    // 没找到相应按钮...
+//                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isCanDanMu", new BoolFunctionTrueHook());
 
                     // 开启发送礼物的功能
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "canShowGift", new BoolFunctionTrueHook());
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "canSendGift", new BoolFunctionTrueHook());
+
+                    // 礼物加载不出来...
+//                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "canShowGift", new BoolFunctionTrueHook());
+//                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "canSendGift", new BoolFunctionTrueHook());
 
                     // 尝试修改为助教
                     // XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isAssistantMode", new BoolFunctionTrueHook());
