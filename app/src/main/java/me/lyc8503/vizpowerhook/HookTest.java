@@ -2,6 +2,7 @@ package me.lyc8503.vizpowerhook;
 
 import android.content.Context;
 
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -9,17 +10,22 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
-import me.lyc8503.vizpowerhook.hook.BoolFunctionFalseHook;
-import me.lyc8503.vizpowerhook.hook.BoolFunctionTrueHook;
+import me.lyc8503.vizpowerhook.hook.AutoRollcallHook;
 import me.lyc8503.vizpowerhook.hook.ClassListActivityHook;
+import me.lyc8503.vizpowerhook.hook.ForceVerticalHook;
+import me.lyc8503.vizpowerhook.hook.HideRealSystemInfoHook;
 import me.lyc8503.vizpowerhook.hook.HttpLoginHook;
+import me.lyc8503.vizpowerhook.hook.KeepFocusedHook;
 import me.lyc8503.vizpowerhook.hook.LoginPDUHook;
+import me.lyc8503.vizpowerhook.hook.PubChatAndSendPicAndAskQuestionAndOpenMicHook;
+import me.lyc8503.vizpowerhook.hook.ReturnRandomMacHook;
 import me.lyc8503.vizpowerhook.hook.StartParamHook;
 
 public class HookTest implements IXposedHookLoadPackage {
 
     private static final String TAG = "VizpowerHookTest";
-    private Context vizContext;
+
+    public static ClassLoader classLoader;
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) {
@@ -41,7 +47,7 @@ public class HookTest implements IXposedHookLoadPackage {
                     // 获取到的参数args[0]就是360的Context对象，通过这个对象来获取classloader
                     Context context = (Context) param.args[0];
                     // 获取360的classloader，之后hook加固后的就使用这个classloader
-                    ClassLoader classLoader = context.getClassLoader();
+                    classLoader = context.getClassLoader();
                     XposedBridge.log(TAG + " Hook到的Classloader: " + classLoader);
                     // 下面就是强classloader修改成360的classloader就可以成功的hook了
 
@@ -77,23 +83,31 @@ public class HookTest implements IXposedHookLoadPackage {
                     XposedHelpers.findAndHookMethod("vizpower.weblogin.VPWebLoginMgr", classLoader, "createMeetingListAdapter", new HttpLoginHook());
 
                     // 强制打开公聊
-                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendChatPub", new BoolFunctionTrueHook());
+                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendChatPub", new PubChatAndSendPicAndAskQuestionAndOpenMicHook());
 
                     // 开启发图模式。为防止夜神可能会被识别为 TV 而禁止，强制竖屏。已测试成功。
-                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendPic", new BoolFunctionTrueHook());
-                    XposedHelpers.findAndHookMethod("vizpower.common.VPUtils", classLoader, "isTVDevice", new BoolFunctionFalseHook());
+                    XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendPic", new PubChatAndSendPicAndAskQuestionAndOpenMicHook());
+                    XposedHelpers.findAndHookMethod("vizpower.common.VPUtils", classLoader, "isTVDevice", new ForceVerticalHook());
 
                     // 开启提问功能，已测试成功。
-                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "canSubmitQuestion", new BoolFunctionTrueHook());
-                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "isAllowSubmitQuestion", new BoolFunctionTrueHook());
+                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "canSubmitQuestion", new PubChatAndSendPicAndAskQuestionAndOpenMicHook());
+                    XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "isAllowSubmitQuestion", new PubChatAndSendPicAndAskQuestionAndOpenMicHook());
 
+                    // 自动签到 + 保持认真
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.RollCallMgr", classLoader, "onRollcall", ByteBuffer.class, new AutoRollcallHook());
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isAppActive", new KeepFocusedHook());
+
+                    // 隐藏 Mac地址 和 机型
+                    XposedHelpers.findAndHookMethod("vizpower.common.VPUtils", classLoader, "getMacAddrByNetworkInterface", new ReturnRandomMacHook());
+                    XposedHelpers.findAndHookMethod("vizpower.common.VPUtils", classLoader, "getLocalMacAddressByWifiManager", Context.class, new ReturnRandomMacHook());
+                    XposedHelpers.findAndHookMethod("vizpower.common.VPUtils", classLoader, "getVersion", new HideRealSystemInfoHook());
 
                     // 先写一个开麦克风功能, 代码风格和GUI都要改了但是我懒啊x
                     // 这个好像一口气打开了很多权限的样子随他去了 :P
                     // Anguei: 查了一下引用，发现只有在 AudioMgr.java 里面，有 if 形式的 hasTheChangeablePriv(int) 调用
                     //         在 ChatMgr.java 和 VPDocView.java 里面，有变量赋值形式的 hasTheChangeablePriv(int, int) 调用
                     // 暂时就开着吧反正可以开麦x
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.PrivilegeMgr", classLoader, "hasTheChangeablePriv", int.class, new BoolFunctionTrueHook());
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.PrivilegeMgr", classLoader, "hasTheChangeablePriv", int.class, new PubChatAndSendPicAndAskQuestionAndOpenMicHook());
 
                     // 开启添加、标记文档的权限
 

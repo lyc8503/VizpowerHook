@@ -60,11 +60,11 @@ public class MyContentProvider extends ContentProvider {
 
         switch (matcher.match(uri)) {
             case 666:
-                MatrixCursor cursor = new MatrixCursor(new String[]{"name", "bypassSensitive", "showPeople"});
+                MatrixCursor cursor = new MatrixCursor(new String[]{"name", "forceVertical", "autoRollcall"});
                 cursor.addRow(new Object[]{
                         preferences.getString("name", ""),
-                        String.valueOf(preferences.getBoolean("bypassSensitive", false)),
-                        String.valueOf(preferences.getBoolean("showPeople", false))
+                        String.valueOf(preferences.getBoolean("forceVertical", false)),
+                        String.valueOf(preferences.getBoolean("autoRollcall", false))
                 });
 
                 return cursor;

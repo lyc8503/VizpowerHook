@@ -37,8 +37,6 @@ public class HttpLoginHook extends XC_MethodHook {
         XposedBridge.log(TAG + " " + Arrays.toString(cursor.getColumnNames()));
         cursor.moveToFirst();
         String name = cursor.getString(cursor.getColumnIndex("name"));
-        boolean bypassSensitive = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("bypassSensitive")));
-        boolean showPeople = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("showPeople")));
         cursor.close();
 
         // 遍历所有课程
@@ -63,21 +61,13 @@ public class HttpLoginHook extends XC_MethodHook {
                 }
 
                 if (entry.getKey().equalsIgnoreCase("SensitiveWordsURL")) {
-                    if (bypassSensitive) {
-                        entry.setValue("http://127.0.0.1/404.txt");
-                        XposedBridge.log(TAG + " Hook到敏感词列表并改为" + "http://127.0.0.1/404.txt");
-                    } else {
-                        XposedBridge.log(TAG + " Hook到敏感词列表. 不修改.");
-                    }
+                    entry.setValue("http://127.0.0.1/404.txt");
+                    XposedBridge.log(TAG + " Hook到敏感词列表并改为" + "http://127.0.0.1/404.txt");
                 }
 
                 if (entry.getKey().equalsIgnoreCase("ShowUserCount")) {
-                    if (showPeople) {
-                        entry.setValue("1");
-                        XposedBridge.log(TAG + " Hook到ShowUserCount并改为" + 1);
-                    } else {
-                        XposedBridge.log(TAG + " Hook到ShowUserCount. 不修改.");
-                    }
+                    entry.setValue("1");
+                    XposedBridge.log(TAG + " Hook到ShowUserCount并改为" + 1);
                 }
 
 //                if (entry.getKey().equals("NickName")){

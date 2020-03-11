@@ -8,82 +8,89 @@
 
     <CheckBox
         android:id="@+id/forceVertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="348dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:checked="false"
-        android:text="强制竖屏(横屏真的很难用x)"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="强制竖屏(横屏真的很难用x)(不开启可能对发送图片功能有影响...)"
+        app:layout_constraintBottom_toTopOf="@+id/autoRollcall"
+        app:layout_constraintEnd_toEndOf="@+id/autoRollcall"
+        app:layout_constraintStart_toStartOf="@+id/autoRollcall"
+        app:layout_constraintTop_toBottomOf="@+id/changeName" />
 
     <CheckBox
         android:id="@+id/autoRollcall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
         android:text="自动签到并保持认真(可以切到其它应用也不会被判定为不认真)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/changeName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forceVertical" />
 
     <EditText
         android:id="@+id/changeName"
-        android:layout_width="130dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="9dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginBottom="13dp"
         android:autoLink="all"
         android:contentDescription="留空则不改."
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/forceVertical"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/introduction"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="14dp"
+        android:layout_width="315dp"
+        android:layout_height="283dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="9dp"
         android:text="@string/introduction"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="152dp"
+        android:layout_height="44dp"
         android:layout_marginStart="14dp"
         android:text="改名(不改请留空)(需要重新登陆以生效): "
         app:layout_constraintBaseline_toBaselineOf="@+id/changeName"
+        app:layout_constraintEnd_toStartOf="@+id/changeName"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="9dp"
         android:text="Github链接(一定要看!): "
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduction" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="11dp"
+        android:autoLink="all"
         android:text="https://github.com/lyc8503/VizpowerHook"
-        app:layout_constraintStart_toStartOf="@+id/introduction"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/changeName"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
