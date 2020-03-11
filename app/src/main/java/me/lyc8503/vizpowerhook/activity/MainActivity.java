@@ -2,7 +2,6 @@ package me.lyc8503.vizpowerhook.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import me.lyc8503.vizpowerhook.R;
-import me.lyc8503.vizpowerhook.hook.HttpLoginHook;
 
 
 import android.content.SharedPreferences;
@@ -46,18 +45,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        CheckBox bypassSensitive = findViewById(R.id.bypassSensitive);
-        bypassSensitive.setChecked(preferences.getBoolean("bypassSensitive", false));
-        bypassSensitive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        CheckBox forceVertical = findViewById(R.id.forceVertical);
+        forceVertical.setChecked(preferences.getBoolean("forceVertical", false));
+        forceVertical.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 onContentChange();
             }
         });
 
-        CheckBox showPeople = findViewById(R.id.showPeople);
-        showPeople.setChecked(preferences.getBoolean("showPeople", false));
-        showPeople.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        CheckBox autoRollcall = findViewById(R.id.autoRollcall);
+        autoRollcall.setChecked(preferences.getBoolean("autoRollcall", false));
+        autoRollcall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 onContentChange();
@@ -74,13 +73,13 @@ public class MainActivity extends AppCompatActivity {
         String name = changeNameTextView.getText().toString();
         editor.putString("name", name);
 
-        CheckBox bypassSensitiveBox = (CheckBox) findViewById(R.id.bypassSensitive);
-        boolean bypassSensitive = bypassSensitiveBox.isChecked();
-        editor.putBoolean("bypassSensitive", bypassSensitive);
+        CheckBox forceVerticalBox = (CheckBox) findViewById(R.id.forceVertical);
+        boolean forceVertical = forceVerticalBox.isChecked();
+        editor.putBoolean("forceVertical", forceVertical);
 
-        CheckBox showPeopleBox = (CheckBox) findViewById(R.id.showPeople);
-        boolean showPeople = showPeopleBox.isChecked();
-        editor.putBoolean("showPeople", showPeople);
+        CheckBox autoRollcallBox = (CheckBox) findViewById(R.id.autoRollcall);
+        boolean autoRollcall = autoRollcallBox.isChecked();
+        editor.putBoolean("autoRollcall", autoRollcall);
 
         editor.apply();
     }

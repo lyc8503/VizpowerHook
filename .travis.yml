@@ -12,3 +12,11 @@ before_install:
 
 script:
   - "./gradlew assembleRelease"
+
+deploy:
+  provider: releases
+  api_key: ${GITHUB_TOKEN}
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: lyc8503/VizpowerHook

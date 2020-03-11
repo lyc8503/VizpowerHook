@@ -11,7 +11,7 @@ public class SetRoleHook extends XC_MethodHook {
     @Override
     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
         super.beforeHookedMethod(param);
-        XposedBridge.log(TAG + " 原来的Role: " + param.args[0] + " 新Role: " + newRole);
+        XposedBridge.log(TAG + " 原来的 Role: " + param.args[0] + " 新 Role: " + newRole);
         param.args[0] = newRole;
     }
 }

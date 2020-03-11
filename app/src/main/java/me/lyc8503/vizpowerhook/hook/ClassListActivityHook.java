@@ -13,13 +13,13 @@ public class ClassListActivityHook extends XC_MethodHook {
 
     @Override
     protected void beforeHookedMethod(MethodHookParam param) {
-        XposedBridge.log(TAG + " 成功HookVizpower目标方法: " + param);
+        XposedBridge.log(TAG + " 成功 HookVizpower 目标方法: " + param);
     }
 
     @Override
     protected void afterHookedMethod(MethodHookParam param) {
         Context vizContext = ((Activity) param.thisObject).getApplicationContext();
-        Toast.makeText(vizContext, "VizpowerHook: 已经Hook到无限宝! 模块启动成功.", Toast.LENGTH_LONG).show();
-        XposedBridge.log(TAG + " Hook Test已经完成!");
+        Toast.makeText(vizContext, "VizpowerHook: 已经 Hook 到无限宝! 模块启动成功.", Toast.LENGTH_LONG).show();
+        XposedBridge.log(TAG + " Hook Test 已经完成!");
     }
 }
