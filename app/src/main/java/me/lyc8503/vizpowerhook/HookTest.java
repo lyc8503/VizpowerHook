@@ -88,6 +88,7 @@ public class HookTest implements IXposedHookLoadPackage {
                     // 开启发图模式。为防止夜神可能会被识别为 TV 而禁止，强制竖屏。已测试成功。
                     XposedHelpers.findAndHookMethod("vizpower.chat.ChatMgr", classLoader, "canSendPic", new PubChatAndSendPicAndAskQuestionAndOpenMicHook());
                     XposedHelpers.findAndHookMethod("vizpower.common.VPUtils", classLoader, "isTVDevice", new ForceVerticalHook());
+                    XposedHelpers.findAndHookMethod("vizpower.common.VPUtils", classLoader, "isPadDevice", new ForceVerticalHook());
 
                     // 开启提问功能，已测试成功。
                     XposedHelpers.findAndHookMethod("vizpower.chat.AskQuestionMgr", classLoader, "canSubmitQuestion", new PubChatAndSendPicAndAskQuestionAndOpenMicHook());

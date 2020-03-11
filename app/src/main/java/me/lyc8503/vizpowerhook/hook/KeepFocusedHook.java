@@ -27,7 +27,7 @@ public class KeepFocusedHook extends XC_MethodHook {
         cursor.close();
 
         if (rollcall) {
-            XposedBridge.log(TAG + "强制修改为认真.");
+//            XposedBridge.log(TAG + "强制修改为认真.");
             param.setResult(true);
         }
     }

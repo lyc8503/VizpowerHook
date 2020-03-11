@@ -29,7 +29,7 @@ public class ForceVerticalHook extends XC_MethodHook {
 
         if (vertical) {
             param.setResult(false);
-            XposedBridge.log(TAG + " 已经强制改为竖屏模式.");
+//            XposedBridge.log(TAG + " 已经强制改为竖屏模式.");
         }
     }
 }
