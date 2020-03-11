@@ -8,7 +8,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
-public class SetTeacherOrAssistantMobileMode extends XC_MethodHook {
+public class SetTeacherOrAssistantMobileModeHook extends XC_MethodHook {
     @Override
     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
         ContentResolver resolver = AndroidAppHelper.currentApplication().getApplicationContext().getContentResolver();

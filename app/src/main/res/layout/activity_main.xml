@@ -7,6 +7,18 @@
     tools:context=".activity.MainActivity">
 
     <CheckBox
+        android:id="@+id/keepSpeak"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:checked="false"
+        android:text="防关麦克风"
+        app:layout_constraintBottom_toTopOf="@+id/teacherMode"
+        app:layout_constraintEnd_toEndOf="@+id/teacherMode"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/teacherMode"
+        app:layout_constraintTop_toBottomOf="@+id/changeName" />
+
+    <CheckBox
         android:id="@+id/teacherMode"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -16,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="@+id/forceVertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/forceVertical"
-        app:layout_constraintTop_toBottomOf="@+id/changeName" />
+        app:layout_constraintTop_toBottomOf="@+id/keepSpeak" />
 
     <CheckBox
         android:id="@+id/forceVertical"
@@ -51,7 +63,7 @@
         android:contentDescription="留空则不改."
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/forceVertical"
+        app:layout_constraintBottom_toTopOf="@+id/keepSpeak"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />

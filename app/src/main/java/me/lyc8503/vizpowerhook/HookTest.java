@@ -12,17 +12,18 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import me.lyc8503.vizpowerhook.hook.AutoRollcallHook;
 import me.lyc8503.vizpowerhook.hook.ClassListActivityHook;
+import me.lyc8503.vizpowerhook.hook.DontKickMeHook;
 import me.lyc8503.vizpowerhook.hook.ForceVerticalHook;
 import me.lyc8503.vizpowerhook.hook.HideRealSystemInfoHook;
 import me.lyc8503.vizpowerhook.hook.HttpLoginHook;
 import me.lyc8503.vizpowerhook.hook.KeepFocusedHook;
+import me.lyc8503.vizpowerhook.hook.KeepSpeakHook;
 import me.lyc8503.vizpowerhook.hook.LoginPDUHook;
 import me.lyc8503.vizpowerhook.hook.PubChatAndSendPicAndAskQuestionAndOpenMicHook;
 import me.lyc8503.vizpowerhook.hook.ReturnRandomMacHook;
 import me.lyc8503.vizpowerhook.hook.StartParamHook;
-import me.lyc8503.vizpowerhook.hook.DontKickMe;
-import me.lyc8503.vizpowerhook.hook.SetTeacherOrAssistantMobileMode;
-import me.lyc8503.vizpowerhook.hook.WantEditDoc;
+import me.lyc8503.vizpowerhook.hook.SetTeacherOrAssistantMobileModeHook;
+import me.lyc8503.vizpowerhook.hook.WantEditDocHook;
 
 public class HookTest implements IXposedHookLoadPackage {
 
@@ -112,18 +113,21 @@ public class HookTest implements IXposedHookLoadPackage {
                     //         在 ChatMgr.java 和 VPDocView.java 里面，有变量赋值形式的 hasTheChangeablePriv(int, int) 调用
                     // 暂时就开着吧反正可以开麦x
                     XposedHelpers.findAndHookMethod("vizpower.imeeting.PrivilegeMgr", classLoader, "hasTheChangeablePriv", int.class, new PubChatAndSendPicAndAskQuestionAndOpenMicHook());
+                    XposedHelpers.findAndHookMethod("vizpower.mtmgr.Room", classLoader, "denySpeak", int.class, new KeepSpeakHook());
 
-                    // 开启添加、标记文档的权限，
-                    // 这里最好弄一个 UI 里的 Checkbox 开关
-                    // 因为会有不定时重连的 feature
-                    // XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isTeacherPhoneMode", new SetTeacherOrAssistantMobileMode());
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isTeacherPhoneMode", new SetTeacherOrAssistantMobileMode());
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "kickout", int.class, new DontKickMe());
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MainActivityTeacher", classLoader, "onExit", new DontKickMe());
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MainActivityTeacherHD", classLoader, "onExit", new DontKickMe());
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.AssistantActivity", classLoader, "onExit", new DontKickMe());
-                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canAddDoc", new WantEditDoc());
-                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canNoteDoc", new WantEditDoc());
+                    // 开启教师模式、添加和标记文档的权限，
+                    // TODO: 开启教师模式后，会有不定时重连的 feature，需要解决
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isTeacherPhoneMode", new SetTeacherOrAssistantMobileModeHook());
+                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canAddDoc", new WantEditDocHook());
+                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canNoteDoc", new WantEditDocHook());
+
+                    // 各种防踢
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "kickout", int.class, new DontKickMeHook());
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MainActivity", classLoader, "onExit", new DontKickMeHook());
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MainActivityHD", classLoader, "onExit", new DontKickMeHook());
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MainActivityTeacher", classLoader, "onExit", new DontKickMeHook());
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.MainActivityTeacherHD", classLoader, "onExit", new DontKickMeHook());
+                    XposedHelpers.findAndHookMethod("vizpower.imeeting.AssistantActivity", classLoader, "onExit", new DontKickMeHook());
 
 
                     // 开启发送礼物的功能

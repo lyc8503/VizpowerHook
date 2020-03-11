@@ -22,7 +22,6 @@ public class ForceVerticalHook extends XC_MethodHook {
         ContentResolver resolver = AndroidAppHelper.currentApplication().getApplicationContext().getContentResolver();
         Uri uri = Uri.parse("content://me.lyc8503.vizpowerhook/config");
         Cursor cursor = resolver.query(uri, null, null, null, null);
-        // XposedBridge.log(TAG + " " + Arrays.toString(cursor.getColumnNames()));
         cursor.moveToFirst();
         boolean vertical = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("forceVertical")));
         cursor.close();
