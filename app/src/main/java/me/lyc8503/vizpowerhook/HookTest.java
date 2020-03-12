@@ -116,10 +116,11 @@ public class HookTest implements IXposedHookLoadPackage {
                     XposedHelpers.findAndHookMethod("vizpower.mtmgr.Room", classLoader, "denySpeak", int.class, new KeepSpeakHook());
 
                     // 开启教师模式、添加和标记文档的权限，
-                    // TODO: 开启教师模式后，会有不定时重连的 feature，需要解决
-                    XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isTeacherPhoneMode", new SetTeacherOrAssistantMobileModeHook());
-                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canAddDoc", new WantEditDocHook());
-                    XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canNoteDoc", new WantEditDocHook());
+                    // 好像没啥用，各种操作会被拦截
+                    // TODO: 开启教师模式后，会有不定时重连的 feature，貌似是操作被拦截的表现，需要解决
+                    // XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "isTeacherPhoneMode", new SetTeacherOrAssistantMobileModeHook());
+                    // XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canAddDoc", new WantEditDocHook());
+                    // XposedHelpers.findAndHookMethod("vizpower.docview.DocManager", classLoader, "canNoteDoc", new WantEditDocHook());
 
                     // 各种防踢
                     XposedHelpers.findAndHookMethod("vizpower.imeeting.iMeetingApp", classLoader, "kickout", int.class, new DontKickMeHook());

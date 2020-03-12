@@ -13,13 +13,13 @@ public class KeepSpeakHook extends XC_MethodHook{
     @Override
     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
         super.beforeHookedMethod(param);
-        ContentResolver resolver = AndroidAppHelper.currentApplication().getApplicationContext().getContentResolver();
+        /*ContentResolver resolver = AndroidAppHelper.currentApplication().getApplicationContext().getContentResolver();
         Uri uri = Uri.parse("content://me.lyc8503.vizpowerhook/config");
         Cursor cursor = resolver.query(uri, null, null, null, null);
         cursor.moveToFirst();
-        boolean keepSpeak = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("forceVertical")));
-        cursor.close();
-        if (keepSpeak) {
+        boolean keepSpeak = Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex("keepSpeak")));
+        cursor.close();*/
+        if (true) {
             param.setResult(null);
             XposedBridge.log("拦截到一次关闭麦克风操作！");
         }

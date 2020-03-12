@@ -10,25 +10,13 @@
         android:id="@+id/keepSpeak"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:checked="false"
-        android:text="防关麦克风"
-        app:layout_constraintBottom_toTopOf="@+id/teacherMode"
-        app:layout_constraintEnd_toEndOf="@+id/teacherMode"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/teacherMode"
-        app:layout_constraintTop_toBottomOf="@+id/changeName" />
-
-    <CheckBox
-        android:id="@+id/teacherMode"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:checked="false"
-        android:text="强制使用教师模式启动，但可能触发断线重连"
+        android:checked="true"
+        android:text="防关麦克风（你去掉勾也没用，因为暂时是默认常开开关）"
         app:layout_constraintBottom_toTopOf="@+id/forceVertical"
         app:layout_constraintEnd_toEndOf="@+id/forceVertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/forceVertical"
-        app:layout_constraintTop_toBottomOf="@+id/keepSpeak" />
+        app:layout_constraintTop_toBottomOf="@+id/changeName" />
 
     <CheckBox
         android:id="@+id/forceVertical"
@@ -40,7 +28,7 @@
         app:layout_constraintBottom_toTopOf="@+id/autoRollcall"
         app:layout_constraintEnd_toEndOf="@+id/autoRollcall"
         app:layout_constraintStart_toStartOf="@+id/autoRollcall"
-        app:layout_constraintTop_toBottomOf="@+id/teacherMode" />
+        app:layout_constraintTop_toBottomOf="@+id/keepSpeak" />
 
     <CheckBox
         android:id="@+id/autoRollcall"
