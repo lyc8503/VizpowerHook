@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Vizpower Hook</string>
-    <string name="introduction"> 这只是一个用来 Hook 无限宝的 Xposed 插件～By lyc8503\n 下面是一些已经实现的功能，更多的功能正在研发 :P\n 本项目是开源项目，欢迎各路大佬到 https://github.com/lyc8503/VizpowerHook 交 Pull Requests.\n\n 有些设置可能会因为无限宝的缓存或版本更新不能及时生效，可以尝试 ** 重新登陆 **(即点击课程列表左下角的退出登录后再登陆) 再试，若还是不行可以在 Github 提交 Issues 或者直接加我 QQ 反馈.\n\n** 本软件的功能远远不止以下几个，使用前一定要先阅读 Github 上的说明！！**</string>
+    <string name="introduction"> 这只是一个用来 Hook 无限宝的 Xposed 插件~By lyc8503\n 下面是一些已经实现的功能, 更多的功能正在研发 :P\n 本项目是开源项目, 欢迎各路大佬到 https://github.com/lyc8503/VizpowerHook 交 Pull Requests.\n\n 有些设置可能会因为无限宝的缓存或版本更新不能及时生效, 可以尝试 ** 重新登陆 **(即点击课程列表左下角的退出登录后再登陆) 再试, 若还是不行可以在 Github 提交 Issues 或者直接加我 QQ 反馈.\n\n** 本软件的功能远远不止以下几个, 使用前一定要先阅读 Github 上的说明!!**</string>
 </resources>
