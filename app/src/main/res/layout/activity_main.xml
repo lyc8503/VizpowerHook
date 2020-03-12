@@ -7,18 +7,6 @@
     tools:context=".activity.MainActivity">
 
     <CheckBox
-        android:id="@+id/keepSpeak"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:checked="true"
-        android:text="防关麦克风（你去掉勾也没用，因为暂时是默认常开开关）"
-        app:layout_constraintBottom_toTopOf="@+id/forceVertical"
-        app:layout_constraintEnd_toEndOf="@+id/forceVertical"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/forceVertical"
-        app:layout_constraintTop_toBottomOf="@+id/changeName" />
-
-    <CheckBox
         android:id="@+id/forceVertical"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -87,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginBottom="9dp"
-        android:text="Github 链接 (一定要看！):"
+        android:text="Github 链接 (一定要看!):"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="parent"
